@@ -48,10 +48,10 @@ const getRequest = (req, res) => {
 
     //yol yanlışsa hata gönder
     res.writeHead(404)
-    JSON.stringify({ message: "yol bulunamadı bulunamadı" })
+    res.end(JSON.stringify({ message: "yol bulunamadı bulunamadı" })
+    )
 
-
-}
+};
 
 
 module.exports = getRequest;
