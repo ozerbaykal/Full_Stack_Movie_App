@@ -3,7 +3,9 @@ import api from "../utils/api";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
-import { FaTrash } from "react-icons/fa";
+
+import ListField from "../components/ListField";
+import DeleteButton from "../components/DeleteButton";
 
 const Detail = () => {
   const { id } = useParams();
@@ -20,9 +22,7 @@ const Detail = () => {
   return (
     <div className="p-10">
       <div className=" flex justify-end">
-        <button className=" bg-red-600 flex justify-end text-white p-2 rounded-md hover:bg-red-400 ">
-          <FaTrash />
-        </button>
+        <DeleteButton id={data.id} />
       </div>
 
       <div className="flex flex-col gap-10 items-center md:flex-row">
@@ -35,22 +35,31 @@ const Detail = () => {
         </div>
         <div className="flex flex-col gap-10">
           {/* başlık */}
-          <h1 className="text-3xl font font-semibold">{data.title}</h1>
+          <div>
+            <h1 className="text-3xl font font-semibold mb-3">{data.title}</h1>
+            <p>{data.description}</p>
+          </div>
 
-          <p>
-            <span className="font-semibold me-3">İzleyici Skoru</span>
-            <span className="p-2 rounded-full text-white bg-gray-400 font-semibold">
-              {Number(data.rating).toFixed(1)}
-            </span>
-          </p>
-          {/* dil */}
-          <Field label="Süre" value={data.duration} />
-          {/* süre */}
-          <Field label="Dil" value={data.language} />
-          {/* yapımcı */}
-          <Field label="Yıl" value={data.year} />
-          {/* yıl */}
-          <Field label="Yapımcı" value={data.director} />
+          <div className="grid gap-10 md:grid-cols-2">
+            <Field
+              label="İzleyici Skoru"
+              value={Number(data.rating).toFixed(1)}
+            />
+            {/* dil */}
+            <Field label="Süre" value={data.duration} />
+            {/* süre */}
+            <Field label="Dil" value={data.language} />
+            {/* yapımcı */}
+            <Field label="Yıl" value={data.year} />
+            {/* yıl */}
+            <Field label="Yapımcı" value={data.director} />
+          </div>
+
+          {/* EKİP */}
+
+          <ListField label="EKİp" arr={data.cast} />
+
+          <ListField label="Türler" arr={data.genre} />
         </div>
       </div>
     </div>
@@ -63,7 +72,7 @@ const Field = ({ label, value }) => {
   return (
     <p>
       <span className="font-semibold me-3">{label}</span>
-      <span className="p-2 rounded-full text-white bg-gray-400 font-semibold">
+      <span className="p-2 px-4 rounded-full text-white bg-gray-400 font-semibold whitespace-nowrap">
         {value}:
       </span>
     </p>

@@ -2,16 +2,24 @@ import Loader from "../components/Loader";
 import api from "../utils/api";
 import { useQuery } from "@tanstack/react-query";
 import Error from "../components/Error";
-
+import { useSearchParams } from "react-router-dom";
 import Card from "../components/Card";
 import Hero from "../components/Hero";
 
 const Main = () => {
+  const [params, setParams] = useSearchParams();
+
+  //api isteğinde kullanılacak olan nesne
+  const options = {
+    params: {
+      query: params.get("query"),
+    },
+  };
+
   const { data, error, isLoading, refect } = useQuery({
-    queryKey: ["movies"],
-    queryFn: () => api.get("/api/movies").then((res) => res.data),
+    queryKey: ["movies", options],
+    queryFn: () => api.get("/api/movies", options).then((res) => res.data),
   });
-  console.log(isLoading, data, error);
 
   return (
     <div>

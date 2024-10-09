@@ -4,22 +4,15 @@ const fs = require("fs")
 const getRequest = (req, res) => {
     //url'in temel adresini değişkene aktar(sondaki param hariç)
 
-    const path = req.url.substring(0, req.url.lastIndexOf("/"))
+    const path = req.url.slice(0, 11)
 
     //url'in sonındaki id değerini değişkene aktardık
     const id = req.url.split("/")[3]
 
-    //temel url 'ye istek atılırsa bütün filmleri gönder
-    if (req.url === "/api/movies") {
-
-        //1. json 'dan verileri al
-        const movies = fs.readFileSync("./data/movies.json", "utf-8")
+    //url ' ın sonundaki  parametrenin değerini al
+    const param = req.url.split("=").pop().toLowerCase().trim();
 
 
-
-        //2.client cevap gönder
-        return res.end(movies)
-    }
 
     //yola id eklenirse bir film gönder
 
@@ -44,6 +37,37 @@ const getRequest = (req, res) => {
         );
 
     };
+
+    //temel url 'ye istek atılırsa bütün filmleri gönder
+    if (path === "/api/movies") {
+
+        //1. json 'dan verileri al
+        const movies = JSON.parse(fs.readFileSync("./data/movies.json", "utf-8")
+        )
+        //2.client cevap gönder
+
+        //eğer parametre varsa filtrelenmiş  filmleri gönder
+        if (param && param !== "/api/movies") {
+            const filtred = movies.filter((movie) => movie.title.toLowerCase().includes(param))
+
+
+
+            return res.end(JSON.stringify(filtred))
+
+
+        }
+        //eğerparametre yoksa bütün filmleri gönder
+        return res.end(JSON.stringify(movies))
+
+
+
+
+
+
+
+    }
+
+
 
 
     //yol yanlışsa hata gönder
