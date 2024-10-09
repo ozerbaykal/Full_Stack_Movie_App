@@ -12,7 +12,7 @@ Full_stack_movie_app is a fully-featured movie application that allows users to 
 
 ![](./frontend/public/images/mainPage.png)
 
-##3 Detail Page
+### Detail Page
 
 ![](./frontend/public/images/detailPage.png)
 
@@ -31,7 +31,7 @@ Full_stack_movie_app is a fully-featured movie application that allows users to 
 - Real-Time Data Processing: Data fetching and caching operations are managed effectively with React Query.
 - Notifications: Notifications are shown for user interactions
 
-## Technologies and Libraries Used
+## Technologies and Libraries Used
 
 ### Frontend
 
